@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rendering Dynamic Images Using Flask</title>
+    <style>
+        .output {
+            width: 900px;
+            font: 16px Arial, sans-serif;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
+        <input name="img" type="file" />
+        <input type="submit" />
+    </form>
+ 
+    <div class="output">
+        {% if encodes %}
+            <h1>Image Encodings</h1>
+            <textarea id="encodingText" readonly>{{ encodes }}</textarea>
+            <button onclick="copyToClipboard()">Copy</button>
+        {% else %}
+            <h1>Image encodings will be rendered here...</h1>
+        {% endif %}
+    </div>
+    
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("encodingText");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);  // For mobile devices
+            document.execCommand("copy");
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
+</body>
+</html>
